@@ -65,7 +65,7 @@ def create_rfm_df(df):
 
     return rfm_idf
 
-bike_df = pd.read_csv("day.csv")
+bike_df = pd.read_csv("dashboard/day.csv")
 
 bike_df['dteday'] = pd.to_datetime(bike_df['dteday'])
 
