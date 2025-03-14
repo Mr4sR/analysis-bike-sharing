@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 from babel.numbers import format_currency
+import os
 
 sns.set(style='dark')
 
@@ -88,8 +89,18 @@ def create_rfm_df(df):
 
     return rfm_idf
 
-bike_df = pd.read_csv("dashboard/day.csv")
-bike_hour_df = pd.read_csv("dashboard/hour.csv")
+def load_csv(file_name):
+    try:
+        return pd.read_csv(file_name)
+    except FileNotFoundError:
+        alternative_path = os.path.join("dashboard", file_name)
+        if os.path.exists(alternative_path):
+            return pd.read_csv(alternative_path)
+        else:
+            raise FileNotFoundError(f"File '{file_name}' tidak ditemukan di lokasi utama maupun di 'dashboard/'")
+
+bike_df = load_csv("day.csv")
+bike_hour_df = load_csv("hour.csv")
 
 datetime_columns = ["dteday"]
 
